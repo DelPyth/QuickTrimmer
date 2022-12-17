@@ -1,0 +1,2 @@
+# Ignore any builds of the trimmer tool as that'll be saved for release.
+build/*.exe

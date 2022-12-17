@@ -1,0 +1,42 @@
+For command line:
+	program [input_video] [output_video] [-time=X-Y]
+	If no parameters are given, the values will be considered empty.
+
+		input_video     Optional. The video path of the file to clip. If not provided, it will ask.
+		output_video    Optional. The video path of the file to save to. If not provided, it will ask.
+		-time=X-Y       Optional. The time to clip to (X) and from (Y). If Y is not provided, it will asume the end of the clip.
+
+	Examples:
+		# Clip the video to the times between 5 and 10. A 5 second clip.
+		program "C:\My Clips\My Video.mp4" "%dir%\%file_name% - Trimmed.%ext%" -time5-10
+
+		# Clip the video only 15 seconds in. Meaning the first 15 seconds of the clip are removed.
+		program "C:\My Clips\My Video.mp4" "%dir%\%file_name% - Trimmed.%ext%" -time15
+
+
+For output file variables:
+	file_name   = The name of the file. My Video.mp4
+	dir         = The directory of the file. C:\My Clips
+	ext         = The extension of the file. mp4
+	name_no_ext = The name of the file without the extention. My Video.
+	drive       = The drive the file is in. C:
+	date        = The current date (yyyy-MM-dd).
+	time        = The current time (HH-mm-ss).
+	date_time   = The current date and time (yyyy-MM-dd HH-mm-ss).
+	now         = The current date and time without the fanciness (YYYYMMDDHH24MISS).
+	now_utc     = The current Coordinated Universal Time (YYYYMMDDHH24MISS). Learn more here:  https://en.wikipedia.org/wiki/Coordinated_Universal_Time
+	rand        = A random number between 0 and 100.
+	username    = Replaceable via custom_vars.txt. The username set on this computer.
+	documents   = Replaceable via custom_vars.txt. The current user's documents folder. C:\Users\%username%\Documents
+	appdata     = Replaceable via custom_vars.txt. The current user's appdata folder. C:\Users\%username%\Appdata\Roaming
+	desktop     = Replaceable via custom_vars.txt. The current user's desktop folder. C:\Users\%username%\Desktop
+
+	Custom variables can be put in custom_vars.txt
+	For example:
+		# Steam path.
+		steam_path = D:\Steam
+		# TF2 and CSGO path.
+		tf_path = %steam_path%\steamapps\common\Team Fortress 2
+		csgo_path = %steam_path%\steamapps\common\Counter Strike Global Offensive
+		# The username I wanna use.
+		username = JoeSmith

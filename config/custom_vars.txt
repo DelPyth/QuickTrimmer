@@ -1,0 +1,4 @@
+# This file contains some example variables.
+# To learn more about custom variables read the readme file.
+
+suffix = - Trimmed
