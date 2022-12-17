@@ -1,6 +1,10 @@
 # TrimmerTool
 A simplistic clip trimmer designed for automating the annoying task. Better than Pickleknotts' version, guaranteed.
 
+# Notes
+This program is WINDOWS ONLY.
+This program requires [FFMPEG](https://ffmpeg.org/download.html) to be installed and in the PATH environment.
+
 # Command line
 ## Usage
 `program [input_video] [output_video] [-time=X-Y]`<br>
