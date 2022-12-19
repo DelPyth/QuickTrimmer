@@ -31,7 +31,7 @@ For output file variables:
 | `file_name`   | false        | The name of the file.                                                                                                  | `My Video.mp4`                        |
 | `dir`         | false        | The directory of the file.                                                                                             | `C:\My Clips`                         |
 | `ext`         | false        | The extension of the file.                                                                                             | `mp4`                                 |
-| `name_no_ext` | false        | The name of the file without the extension.                                                                            | `My Video.`                           |
+| `name_no_ext` | false        | The name of the file without the extension.                                                                            | `My Video`                            |
 | `drive`       | false        | The drive the file is in.                                                                                              | `C:`                                  |
 | `date`        | false        | The current date (yyyy-MM-dd).                                                                                         |                                       |
 | `time`        | false        | The current time (HH-mm-ss).                                                                                           |                                       |
