@@ -33,13 +33,13 @@ For output file variables:
 | `ext`         | false        | The extension of the file.                                                                                             | `mp4`                                 |
 | `name_no_ext` | false        | The name of the file without the extension.                                                                            | `My Video`                            |
 | `drive`       | false        | The drive the file is in.                                                                                              | `C:`                                  |
-| `date`        | false        | The current date (yyyy-MM-dd).                                                                                         |                                       |
-| `time`        | false        | The current time (HH-mm-ss).                                                                                           |                                       |
-| `date_time`   | false        | The current date and time (yyyy-MM-dd HH-mm-ss).                                                                       |                                       |
-| `now`         | false        | The current date and time without the fanciness (YYYYMMDDHH24MISS).                                                    |                                       |
-| `now_utc`     | false        | The current [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) (YYYYMMDDHH24MISS). |                                       |
-| `rand`        | false        | A random number between 0 and 100.                                                                                     |                                       |
-| `username`    | true         | The username set on this computer.                                                                                     |                                       |
+| `date`        | false        | The current date (yyyy-MM-dd).                                                                                         | `2022-12-31`                          |
+| `time`        | false        | The current time (HH-mm-ss).                                                                                           | `14-59-59`                            |
+| `date_time`   | false        | The current date and time (yyyy-MM-dd HH-mm-ss).                                                                       | `2022-12-31 14-59-59`                 |
+| `now`         | false        | The current date and time without the fanciness (YYYYMMDDHH24MISS).                                                    | `20221231145959`                      |
+| `now_utc`     | false        | The current [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) (YYYYMMDDHH24MISS). | `20221231145959`                      |
+| `rand`        | false        | A random number between 0 and 100.                                                                                     | `34`                                  |
+| `username`    | true         | The username set on this computer.                                                                                     | `George`                              |
 | `documents`   | true         | The current user's documents folder.                                                                                   | `C:\Users\%username%\Documents`       |
 | `appdata`     | true         | The current user's appdata folder.                                                                                     | `C:\Users\%username%\Appdata\Roaming` |
 | `desktop`     | true         | The current user's desktop folder.                                                                                     | `C:\Users\%username%\Desktop`         |
