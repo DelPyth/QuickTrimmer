@@ -360,6 +360,7 @@ trimVideo(in_video, out_video, start_time, end_time := "")
 	return ErrorLevel
 }
 
+; TODO: Add this function to guiDropFiles() and set clip end time to length of video.
 getLengthOfVideo(path)
 {
 	static obj_shell := ComObjCreate("Shell.Application")
