@@ -42,16 +42,19 @@ FileGetVersion, ver, % A_ScriptFullPath
 APP.version := ver
 */
 
+ui := {}
+
 main(args)
 {
+	global ui
+
 	EM_SETCUEBANNER := (0x1500 + 1)
 
 	opt := getInputValues(A_Args)
 
 	Gui, 1:New, +hwndui_hwnd -MinimizeBox -DPIScale, % APP.name . " v" . APP.version
+	ui.hwnd := ui_hwnd
 	Gui, 1:Margin, 5, 5
-
-	ui := {}
 
 	; Input video group...
 	Gui, 1:Add, Text, xm ym w70 h22, Input Video:
@@ -91,6 +94,7 @@ main(args)
 	Gui, 1:Add, Button, xm y+m w75 h23 Default hwndbttn3, &Trim Video
 	fn := Func("startTrim").Bind(ui)
 	GuiControl, 1:+g, % bttn3, % fn
+	ui.trim_bttn := bttn3
 
 	Gui, 1:Add, Button, x+m yp w75 h23 gcloseProgram hwndbttn4, &Close
 
@@ -111,7 +115,7 @@ main(args)
 
 	loop
 	{
-		if (!WinExist("ahk_id " . ui_hwnd))
+		if (!WinExist("ahk_id " . ui.hwnd))
 		{
 			break
 		}
@@ -120,9 +124,19 @@ main(args)
 	return 0
 }
 
-startTrim(ui)
+guiDropFiles(hui_hwnd, file_array, ctrl_hwnd, xpos, ypos)
 {
+	global ui
+	GuiControl, 1:Text, % ui.in_video, % file_array[1]
+}
+
+startTrim()
+{
+	global ui
 	Gui, 1:+OwnDialogs
+
+	GuiControl, 1:Disable, % ui.trim_bttn
+
 	GuiControlGet, in_video, 1:, % ui.in_video
 	GuiControlGet, out_video, 1:, % ui.out_video
 	GuiControlGet, start_time, 1:, % ui.start_time
@@ -130,25 +144,25 @@ startTrim(ui)
 
 	if (!in_video || !FileExist(in_video))
 	{
-		MsgBox, 0x10, % APP.name, % "Input video file does not exist or input is empty."
+		showBalloonTip(ui.in_video, "Empty or Invalid File", "Input video file does not exist or input is empty.", 3)
 		return
 	}
 
-	if (!out_video)
+	if (out_video == "")
 	{
-		MsgBox, 0x10, % APP.name, % "Output video file does not exist or input is empty."
+		showBalloonTip(ui.out_video, "Empty File", "Output video file does not exist or input is empty.", 3)
 		return
 	}
 
 	if (start_time == "")
 	{
-		MsgBox, 0x30, % APP.name, % "You must provide a valid video time for the start of the clip."
+		showBalloonTip(ui.start_time, "", "You must provide a valid video time for the start of the clip.", 3)
 		return
 	}
 
 	if (end_time == "")
 	{
-		MsgBox, 0x40, % APP.name, % "End of the video was left blank. Assuming end of video's time."
+		showBalloonTip(ui.end_time, "", "End of the video was left blank. Assuming end of video's time.", 2)
 	}
 
 	SplitPath, in_video, file_name, dir, ext, name_no_ext, drive
@@ -243,6 +257,7 @@ startTrim(ui)
 	}
 
 	MsgBox, 0x40, % APP.name, % "Video was saved to:`n`n" . out_video
+	GuiControl, 1:Enable, % ui.trim_bttn
 	return
 }
 
@@ -345,6 +360,16 @@ trimVideo(in_video, out_video, start_time, end_time := "")
 	return ErrorLevel
 }
 
+getLengthOfVideo(path)
+{
+	static obj_shell := ComObjCreate("Shell.Application")
+
+	SplitPath, path, file_name, dir
+
+	oDir := obj_shell.NameSpace(dir)
+	return oDir.GetDetailsOf(oDir.ParseName(file_name), 27)
+}
+
 guiButtonIcon(Handle, File, Index := 1, Options := "")
 {
 	RegExMatch(Options, "i)w\K\d+", W), (W="") ? W := 16 :
@@ -365,6 +390,16 @@ guiButtonIcon(Handle, File, Index := 1, Options := "")
 	NumPut( A, button_il, 16 + Psz, DW )	; Alignment
 	SendMessage, BCM_SETIMAGELIST := 5634, 0, &button_il,, AHK_ID %Handle%
 	return IL_Add( normal_il, File, Index )
+}
+
+showBalloonTip(hEdit, Title, Text, Icon := 0)
+{
+	NumPut(VarSetCapacity(EDITBALLOONTIP, 4 * A_PtrSize, 0), EDITBALLOONTIP)
+	NumPut(&Title, EDITBALLOONTIP, A_PtrSize, "Ptr")
+	NumPut(&Text, EDITBALLOONTIP, A_PtrSize * 2, "Ptr")
+	NumPut(Icon, EDITBALLOONTIP, A_PtrSize * 3, "UInt")
+	SendMessage, 0x1503, 0, &EDITBALLOONTIP,, ahk_id %hEdit% ; EM_SHOWBALLOONTIP
+	Return, ErrorLevel
 }
 
 ExitApp % main(A_Args)
